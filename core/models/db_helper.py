@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     async_scoped_session,
 )
+from asyncio import current_task
 from core.config import settings
 
 
@@ -19,6 +20,15 @@ class DatabaseHelper:
             autocommit = False,
             expire_on_commit= False,
         )
+
+
+
+    def get_scoped_session(self):
+        session = async_scoped_session(
+            session_factory=self.session_factory,
+            scopefunc=current_task
+        )
+        return session
 
 db_helper = DatabaseHelper(
     url = settings.db_url,
