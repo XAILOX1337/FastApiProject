@@ -1,7 +1,3 @@
-
-
-
-
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.orm import Mapped
 
@@ -10,9 +6,19 @@ class ProductBase(BaseModel):
     price: int
     description: str
 
-class ProductCreate(BaseModel):
+
+class ProductCreate(ProductBase):
     pass
 
+
+class ProductUpdate(ProductCreate):
+    pass
+
+
+class ProductUpdatePartial(ProductCreate):
+    name: str | None = None
+    price: int | None = None
+    description: str | None = None
 
 
 class Product(ProductBase):
